@@ -1,7 +1,7 @@
 {
   "name": "ezad-softphone",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a softphone application for ezad",
   "homepage": "https://ezad-softphone.com",
   "main": "main.js",
   "scripts": {
