@@ -39,10 +39,10 @@
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "electron": "^30.0.6",
+    "electron-builder": "^23.6.0",
     "electron-reload": "^2.0.0-alpha.1"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1",
-    "electron-store": "^9.0.0"
+    "electron-squirrel-startup": "^1.0.1"
   }
 }

@@ -1,21 +1,16 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, systemPreferences } = require("electron");
 
 let mainWindow;
-let store;
 
-// Dynamically import electron-store and initialize the store after import
-import("electron-store")
-  .then((ElectronStore) => {
-    store = new ElectronStore.default(); // Ensure that you are accessing the default export correctly
-
-    app.whenReady().then(createWindow);
-  })
-  .catch((e) => {
-    console.error("Failed to load electron-store:", e);
-  });
-
-function createWindow() {
+async function createWindow() {
   app.setName("EZ AD Webphone");
+
+  const hasMicrophoneAccess = await systemPreferences.askForMediaAccess('microphone');
+  if (!hasMicrophoneAccess) {
+    alert('Microphone access denied. Exiting app.');
+    app.quit();
+    return;
+  }
 
   mainWindow = new BrowserWindow({
     width: 345,
@@ -32,12 +27,14 @@ function createWindow() {
   mainWindow.loadURL("file://" + __dirname + "/index.html");
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   ipcMain.on("onIncomingCall", (event, phoneNumber) => {
     mainWindow.show();
   });
 }
+
+app.whenReady().then(createWindow);
 
 // Ensure the app is the default client for 'tel' links
 app.setAsDefaultProtocolClient("tel");
